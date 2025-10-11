@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: life-cycle-backend
+  
+  datasource:
+    url: jdbc:postgresql://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
+    driver-class-name: org.postgresql.Driver
+    username: twothree_user
+    password: twothree_user123!
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+server:
+  port: 8080
+  address: 0.0.0.0
+  compression:
+    enabled: true
+  error:
+    include-message: always
+    include-stacktrace: never
+
+# API 설정
+api:
+  base-url: http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080
+  version: v1
+
+# Swagger 설정 (운영 환경에서도 활성화, 필요시 비활성화 가능)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+logging:
+  level:
+    root: INFO
+    com.twothree.backend: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 30
+

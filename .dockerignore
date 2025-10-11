@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Build
+build/
+!build/libs/*.jar
+target/
+out/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.DS_Store
+
+# Gradle
+.gradle/
+gradle-wrapper.jar
+
+# Logs
+logs/
+*.log
+
+# Test
+src/test/
+
+# Documentation
+*.md
+!README.md
+
