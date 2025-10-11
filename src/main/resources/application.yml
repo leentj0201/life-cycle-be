@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: life-cycle-backend
+  
+  datasource:
+    url: jdbc:postgresql://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
+    driver-class-name: org.postgresql.Driver
+    username: twothree_user
+    password: twothree_user123!
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+server:
+  port: 8080
+  address: localhost
+
+# API 설정
+api:
+  base-url: http://localhost:8080
+  version: v1
+
+# Swagger 설정
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+logging:
+  level:
+    com.twothree.backend: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
