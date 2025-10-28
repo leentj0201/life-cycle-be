@@ -20,7 +20,6 @@ import org.hibernate.annotations.ColumnDefault;
 public class Church extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "church_id", nullable = false)
     private UUID id;
 

@@ -263,11 +263,16 @@ public final class ApiEndpoints {
         private Server() {}
         
         public static final String LOCAL = "http://localhost:8080";
-        public static final String PRODUCTION = "http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080";
+        public static final String INT = "http://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:8080";
+        public static final String PRODUCTION = "https://api.your-domain.com";  // 미래 운영 도메인
         
         // Full URLs
         public static String getLocalSwaggerUrl() {
             return LOCAL + Swagger.UI_INDEX;
+        }
+        
+        public static String getIntSwaggerUrl() {
+            return INT + Swagger.UI_INDEX;
         }
         
         public static String getProductionSwaggerUrl() {
@@ -276,6 +281,10 @@ public final class ApiEndpoints {
         
         public static String getLocalApiDocsUrl() {
             return LOCAL + Swagger.API_DOCS;
+        }
+        
+        public static String getIntApiDocsUrl() {
+            return INT + Swagger.API_DOCS;
         }
         
         public static String getProductionApiDocsUrl() {

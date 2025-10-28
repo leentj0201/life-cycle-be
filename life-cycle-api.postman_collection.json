@@ -1,0 +1,717 @@
+{
+  "info": {
+    "name": "생애주기 관리 시스템 API",
+    "description": "Life Cycle Management System REST API Collection",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "productionUrl",
+      "value": "http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Church Management",
+      "item": [
+        {
+          "name": "Create Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"사랑의교회\",\n  \"address\": \"서울시 강남구 테헤란로 123\",\n  \"phone\": \"02-1234-5678\",\n  \"email\": \"contact@sarang.church\",\n  \"website\": \"https://www.sarang.church\",\n  \"pastorName\": \"김목사\",\n  \"description\": \"은혜가 넘치는 교회입니다.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/church/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "church", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"교회ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/church/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "church", "get"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Churches",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/church/list",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "church", "list"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"교회ID를 여기에 입력\",\n  \"name\": \"사랑의교회 (수정됨)\",\n  \"address\": \"서울시 강남구 테헤란로 456\",\n  \"phone\": \"02-9876-5432\",\n  \"email\": \"info@sarang.church\",\n  \"website\": \"https://www.sarang.church\",\n  \"pastorName\": \"박목사\",\n  \"description\": \"더욱 은혜가 넘치는 교회입니다.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/church/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "church", "update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"교회ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/church/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "church", "delete"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Member Management",
+      "item": [
+        {
+          "name": "Create Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\",\n  \"loginId\": \"hong123\",\n  \"password\": \"securePassword123!\",\n  \"name\": \"홍길동\",\n  \"phone\": \"010-1234-5678\",\n  \"birth\": \"1990-05-15\",\n  \"memberRole\": \"MEMBER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "get"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/list",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "list"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Members by Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/list-by-church",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "list-by-church"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"회원ID를 여기에 입력\",\n  \"churchId\": \"교회ID를 여기에 입력\",\n  \"loginId\": \"hong123\",\n  \"password\": \"newSecurePassword123!\",\n  \"name\": \"홍길동 (수정됨)\",\n  \"phone\": \"010-9876-5432\",\n  \"birth\": \"1990-05-15\",\n  \"memberRole\": \"DEPARTMENT_LEADER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member", "delete"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Department Management",
+      "item": [
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\",\n  \"name\": \"청년부\",\n  \"description\": \"19-29세 청년들을 위한 부서\",\n  \"targetAgeMin\": 19,\n  \"targetAgeMax\": 29,\n  \"responsiblePerson\": \"김청년전도사\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/department/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "department", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Department",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"부서ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/department/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "department", "get"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Departments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/department/list",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "department", "list"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Departments by Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/department/list-by-church",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "department", "list-by-church"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Lifecycle Management",
+      "item": [
+        {
+          "name": "Create Lifecycle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\",\n  \"name\": \"청년기\",\n  \"description\": \"19-29세 청년들을 위한 생애주기\",\n  \"minAge\": 19,\n  \"maxAge\": 29,\n  \"color\": \"#20B2AA\",\n  \"icon\": \"heart\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/lifecycle/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "lifecycle", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Lifecycles by Church",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"churchId\": \"교회ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/lifecycle/list-by-church",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "lifecycle", "list-by-church"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Member-Department Relations",
+      "item": [
+        {
+          "name": "Create Member-Department Relation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\",\n  \"departmentId\": \"부서ID를 여기에 입력\",\n  \"joinDate\": \"2024-01-15\",\n  \"role\": \"MEMBER\",\n  \"note\": \"새로 등록된 청년\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-department/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-department", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Member's Departments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-department/list-by-member",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-department", "list-by-member"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Department's Members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"departmentId\": \"부서ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-department/list-by-department",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-department", "list-by-department"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Member-Lifecycle Relations",
+      "item": [
+        {
+          "name": "Create Member-Lifecycle Relation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\",\n  \"lifecycleId\": \"생애주기ID를 여기에 입력\",\n  \"startDate\": \"2024-01-15\",\n  \"endDate\": null,\n  \"note\": \"청년기 시작\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-lifecycle/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-lifecycle", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Member's Lifecycles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-lifecycle/list-by-member",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-lifecycle", "list-by-member"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Content Management",
+      "item": [
+        {
+          "name": "Create Department Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"departmentId\": \"부서ID를 여기에 입력\",\n  \"title\": \"청년부 여름수련회\",\n  \"content\": \"2024년 청년부 여름수련회 안내입니다.\",\n  \"contentType\": \"EVENT\",\n  \"startDate\": \"2024-07-15\",\n  \"endDate\": \"2024-07-17\",\n  \"location\": \"강원도 평창\",\n  \"maxParticipants\": 50,\n  \"cost\": 150000,\n  \"registrationDeadline\": \"2024-07-01\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/department-content/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "department-content", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Lifecycle Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lifecycleId\": \"생애주기ID를 여기에 입력\",\n  \"title\": \"청년기 신앙 성장 과정\",\n  \"content\": \"청년기에 필요한 신앙 성장 과정에 대한 안내입니다.\",\n  \"contentType\": \"EDUCATION\",\n  \"startDate\": \"2024-02-01\",\n  \"endDate\": \"2024-11-30\",\n  \"location\": \"교회 본당\",\n  \"maxParticipants\": 30,\n  \"cost\": 50000,\n  \"registrationDeadline\": \"2024-01-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/lifecycle-content/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "lifecycle-content", "create"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. Family Management",
+      "item": [
+        {
+          "name": "Create Family Relation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\",\n  \"relatedMemberId\": \"관련회원ID를 여기에 입력\",\n  \"relationType\": \"CHILD\",\n  \"note\": \"첫째 아들\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-family/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-family", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Member's Family",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-family/list-by-member",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-family", "list-by-member"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "9. Member Settings",
+      "item": [
+        {
+          "name": "Create Member Setting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\",\n  \"notificationEnabled\": true,\n  \"emailNotification\": true,\n  \"smsNotification\": false,\n  \"language\": \"ko\",\n  \"theme\": \"light\",\n  \"timezone\": \"Asia/Seoul\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-setting/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-setting", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Member Setting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"회원ID를 여기에 입력\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/member-setting/get-by-member",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "member-setting", "get-by-member"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "99. System Health Check",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/swagger-ui.html",
+              "host": ["{{baseUrl}}"],
+              "path": ["swagger-ui.html"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OpenAPI Docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v3/api-docs",
+              "host": ["{{baseUrl}}"],
+              "path": ["v3", "api-docs"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

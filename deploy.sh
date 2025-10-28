@@ -16,7 +16,7 @@ JAR_FILE=$(ls build/libs/*.jar | grep -v plain | head -1)
 if [ -z "$JAR_FILE" ]; then
     echo "❌ JAR 파일을 찾을 수 없습니다."
     exit 1
-fi
+f
 echo "✅ 빌드 완료: $JAR_FILE"
 
 # 3. 기존 프로세스 종료

@@ -3,10 +3,10 @@ spring:
     name: life-cycle-backend
   
   datasource:
-    url: jdbc:postgresql://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
+    url: jdbc:postgresql://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
     driver-class-name: org.postgresql.Driver
-    username: twothree_user
-    password: twothree_user123!
+    username: life_cycle_user
+    password: life_cycle_user123!
   jpa:
     hibernate:
       ddl-auto: validate

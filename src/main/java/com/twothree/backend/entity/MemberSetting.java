@@ -19,7 +19,6 @@ import org.hibernate.annotations.ColumnDefault;
 public class MemberSetting extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_setting_id", nullable = false)
     private UUID id;
 

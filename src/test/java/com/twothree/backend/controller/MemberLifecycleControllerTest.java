@@ -27,18 +27,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(GlobalExceptionHandler.class)
 @DisplayName("MemberLifecycleController 테스트")
 class MemberLifecycleControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
-    
+
     @Autowired
     private ObjectMapper objectMapper;
-    
+
     @MockBean
     private MemberLifecycleService memberLifecycleService;
-    
+
     private MemberLifecycleResponseDto responseDto;
-    
+
     @BeforeEach
     void setUp() {
         responseDto = MemberLifecycleResponseDto.builder()
@@ -48,7 +48,7 @@ class MemberLifecycleControllerTest {
                 .isActive(true)
                 .build();
     }
-    
+
     @Test
     @DisplayName("회원-생애주기 매핑 생성 성공")
     void create_Success() throws Exception {
@@ -56,17 +56,16 @@ class MemberLifecycleControllerTest {
         MemberLifecycleCreateDto dto = new MemberLifecycleCreateDto();
         dto.setMemberId(UUID.randomUUID());
         dto.setLifecycleId(UUID.randomUUID());
-        
+
         when(memberLifecycleService.createMemberLifecycle(any(MemberLifecycleCreateDto.class)))
                 .thenReturn(responseDto);
-        
+
         // when & then
         mockMvc.perform(post(ApiEndpoints.MemberLifecycle.FULL_CREATE)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated());
-        
+
         verify(memberLifecycleService, times(1)).createMemberLifecycle(any(MemberLifecycleCreateDto.class));
     }
 }
-

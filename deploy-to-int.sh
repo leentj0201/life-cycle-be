@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# AWS EC2 운영 서버 배포 스크립트
+# AWS EC2 INT 서버 배포 스크립트 (통합 테스트 환경)
 set -e
 
 # 색상 정의
@@ -11,20 +11,20 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # 설정
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/life-cycle-prod.pem}"
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/life-cycle-int.pem}"
 SERVER_USER="${SERVER_USER:-ubuntu}"
 SERVER_HOST="${SERVER_HOST:-ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com}"
 APP_NAME="life-cycle-0.0.1-SNAPSHOT.jar"
-REMOTE_DIR="~/life-cycle-prod"
-PROFILE="prod"
+REMOTE_DIR="~/life-cycle-int"
+PROFILE="int"
 
 echo -e "${GREEN}=========================================="
-echo "PROD 환경 배포 시작 (운영 서버)"
+echo "INT 환경 배포 시작 (통합 테스트 서버)"
 echo -e "==========================================${NC}"
-echo -e "${BLUE}환경: PROD (Production)${NC}"  
+echo -e "${BLUE}환경: INT (Integration Testing)${NC}"  
 echo -e "${BLUE}서버: $SERVER_HOST${NC}"
 echo -e "${BLUE}프로필: $PROFILE${NC}"
-echo -e "${BLUE}데이터베이스: PROD-DB (미래)${NC}"
+echo -e "${BLUE}데이터베이스: INT-DB${NC}"
 echo ""
 
 # 1. SSH 키 확인
@@ -53,38 +53,38 @@ echo -e "${GREEN}✅ 빌드 완료: $JAR_FILE${NC}"
 
 # 3. 서버 연결 테스트
 echo -e "${GREEN}2. 서버 연결 테스트 중...${NC}"
-ssh -i "$SSH_KEY" -o ConnectTimeout=10 "$SERVER_USER@$SERVER_HOST" "echo '연결 성공'" 2>/dev/null
+ssh -i "$SSH_KEY" -o ConnectTimeout=10 "$SERVER_USER@$SERVER_HOST" "echo 'INT 서버 연결 성공'" 2>/dev/null
 if [ $? -ne 0 ]; then
-    echo -e "${RED}❌ 서버 연결 실패${NC}"
+    echo -e "${RED}❌ INT 서버 연결 실패${NC}"
     echo "서버 주소: $SERVER_USER@$SERVER_HOST"
     echo "SSH 키: $SSH_KEY"
     exit 1
 fi
-echo -e "${GREEN}✅ 서버 연결 성공${NC}"
+echo -e "${GREEN}✅ INT 서버 연결 성공${NC}"
 
 # 4. 디렉토리 생성
-echo -e "${GREEN}3. PROD 서버 디렉토리 준비 중...${NC}"
+echo -e "${GREEN}3. INT 서버 디렉토리 준비 중...${NC}"
 ssh -i "$SSH_KEY" "$SERVER_USER@$SERVER_HOST" << 'EOF'
-mkdir -p ~/life-cycle-prod
-mkdir -p ~/life-cycle-prod/logs
-mkdir -p ~/life-cycle-prod/backup
-mkdir -p ~/life-cycle-prod/config
+mkdir -p ~/life-cycle-int
+mkdir -p ~/life-cycle-int/logs
+mkdir -p ~/life-cycle-int/backup
+mkdir -p ~/life-cycle-int/config
 EOF
 
 # 5. 기존 파일 백업
 echo -e "${GREEN}4. 기존 파일 백업 중...${NC}"
 ssh -i "$SSH_KEY" "$SERVER_USER@$SERVER_HOST" << 'EOF'
-cd ~/life-cycle-prod
+cd ~/life-cycle-int
 if [ -f life-cycle-0.0.1-SNAPSHOT.jar ]; then
-    BACKUP_NAME="life-cycle-prod-backup-$(date +%Y%m%d_%H%M%S).jar"
+    BACKUP_NAME="life-cycle-int-backup-$(date +%Y%m%d_%H%M%S).jar"
     mv life-cycle-0.0.1-SNAPSHOT.jar backup/$BACKUP_NAME
-    echo "PROD 백업 완료: $BACKUP_NAME"
+    echo "INT 백업 완료: $BACKUP_NAME"
 fi
 EOF
 
 # 6. JAR 파일 업로드
 echo -e "${GREEN}5. JAR 파일 업로드 중...${NC}"
-scp -i "$SSH_KEY" "$JAR_FILE" "$SERVER_USER@$SERVER_HOST:~/life-cycle-prod/$APP_NAME"
+scp -i "$SSH_KEY" "$JAR_FILE" "$SERVER_USER@$SERVER_HOST:~/life-cycle-int/$APP_NAME"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ 파일 업로드 완료${NC}"
 else
@@ -92,23 +92,23 @@ else
     exit 1
 fi
 
-# 7. PROD 설정 파일 업로드
-echo -e "${GREEN}6. PROD 설정 파일 업로드 중...${NC}"
-scp -i "$SSH_KEY" src/main/resources/application-prod.yml \
-    "$SERVER_USER@$SERVER_HOST:~/life-cycle-prod/"
+# 7. INT 설정 파일 업로드
+echo -e "${GREEN}6. INT 설정 파일 업로드 중...${NC}"
+scp -i "$SSH_KEY" src/main/resources/application-int.yml \
+    "$SERVER_USER@$SERVER_HOST:~/life-cycle-int/"
 
 # 8. 기존 프로세스 종료 및 새 프로세스 시작
-echo -e "${GREEN}7. PROD 애플리케이션 재시작 중...${NC}"
+echo -e "${GREEN}7. INT 애플리케이션 재시작 중...${NC}"
 ssh -i "$SSH_KEY" "$SERVER_USER@$SERVER_HOST" << 'EOF'
-cd ~/life-cycle-prod
+cd ~/life-cycle-int
 
-echo "기존 PROD 프로세스 확인 및 종료..."
+echo "기존 INT 프로세스 확인 및 종료..."
 
 # 기존 프로세스 종료
-if [ -f prod-app.pid ]; then
-    OLD_PID=$(cat prod-app.pid)
+if [ -f int-app.pid ]; then
+    OLD_PID=$(cat int-app.pid)
     if ps -p $OLD_PID > /dev/null 2>&1; then
-        echo "기존 PROD 프로세스 종료 중 (PID: $OLD_PID)..."
+        echo "기존 INT 프로세스 종료 중 (PID: $OLD_PID)..."
         kill $OLD_PID
         sleep 5
         
@@ -117,7 +117,7 @@ if [ -f prod-app.pid ]; then
             kill -9 $OLD_PID 2>/dev/null || true
         fi
     fi
-    rm prod-app.pid
+    rm int-app.pid
 fi
 
 # 포트 8080에서 실행 중인 다른 프로세스 확인 및 종료
@@ -129,24 +129,24 @@ fi
 
 sleep 3
 
-# 새 PROD 프로세스 시작
-echo "PROD 환경으로 새 프로세스 시작 중..."
+# 새 INT 프로세스 시작
+echo "INT 환경으로 새 프로세스 시작 중..."
 nohup java -jar \
-    -Dspring.profiles.active=prod \
-    -Dspring.config.location=file:./application-prod.yml \
-    -Xms1024m \
-    -Xmx2048m \
+    -Dspring.profiles.active=int \
+    -Dspring.config.location=file:./application-int.yml \
+    -Xms512m \
+    -Xmx1024m \
     -XX:+UseG1GC \
     -Dserver.port=8080 \
-    life-cycle-0.0.1-SNAPSHOT.jar > logs/prod-application.log 2>&1 &
+    life-cycle-0.0.1-SNAPSHOT.jar > logs/int-application.log 2>&1 &
 
-echo $! > prod-app.pid
-echo "새 PROD 프로세스 시작됨 (PID: $(cat prod-app.pid))"
-echo "로그 파일: ~/life-cycle-prod/logs/prod-application.log"
+echo $! > int-app.pid
+echo "새 INT 프로세스 시작됨 (PID: $(cat int-app.pid))"
+echo "로그 파일: ~/life-cycle-int/logs/int-application.log"
 EOF
 
 # 9. 배포 확인
-echo -e "${GREEN}8. PROD 서버 배포 확인 중...${NC}"
+echo -e "${GREEN}8. INT 서버 배포 확인 중...${NC}"
 sleep 15
 
 for i in {1..30}; do
@@ -156,22 +156,22 @@ for i in {1..30}; do
         -H "Content-Type: application/json" 2>/dev/null)
     
     if [ "$HTTP_CODE" = "200" ]; then
-        echo -e "${GREEN}✅ PROD 서버가 정상적으로 시작되었습니다!${NC}"
+        echo -e "${GREEN}✅ INT 서버가 정상적으로 시작되었습니다!${NC}"
         echo ""
         echo -e "${GREEN}=========================================="
-        echo "PROD 환경 배포 완료!"
+        echo "INT 환경 배포 완료!"
         echo -e "==========================================${NC}"
-        echo -e "${BLUE}🌐 PROD 서버 정보:${NC}"
+        echo -e "${BLUE}🌐 INT 서버 정보:${NC}"
         echo "• 서버 URL: http://$SERVER_HOST:8080"
-        echo "• Swagger UI: http://$SERVER_HOST:8080/swagger-ui.html (운영에서는 비활성화)"
-        echo "• API Docs: http://$SERVER_HOST:8080/v3/api-docs (운영에서는 비활성화)"
-        echo "• 환경: PROD (Production)"
-        echo "• 데이터베이스: PROD-DB (미래 구성)"
+        echo "• Swagger UI: http://$SERVER_HOST:8080/swagger-ui.html"
+        echo "• API Docs: http://$SERVER_HOST:8080/v3/api-docs"
+        echo "• 환경: INT (Integration Testing)"
+        echo "• 데이터베이스: INT-DB (같은 EC2 PostgreSQL)"
         echo ""
         echo -e "${YELLOW}💡 유용한 명령어:${NC}"
-        echo "• 로그 확인: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'tail -f ~/life-cycle-prod/logs/prod-application.log'"
-        echo "• 프로세스 확인: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'ps -p \$(cat ~/life-cycle-prod/prod-app.pid)'"
-        echo "• 서버 중지: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'kill \$(cat ~/life-cycle-prod/prod-app.pid)'"
+        echo "• 로그 확인: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'tail -f ~/life-cycle-int/logs/int-application.log'"
+        echo "• 프로세스 확인: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'ps -p \$(cat ~/life-cycle-int/int-app.pid)'"
+        echo "• 서버 중지: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'kill \$(cat ~/life-cycle-int/int-app.pid)'"
         echo ""
         echo -e "${GREEN}🧪 테스트 API 호출:${NC}"
         echo "curl -X POST http://$SERVER_HOST:8080/api/church/list -H 'Content-Type: application/json' -d '{}'"
@@ -179,13 +179,13 @@ for i in {1..30}; do
         exit 0
     fi
     
-    echo "PROD 서버 시작 대기 중... ($i/30)"
+    echo "INT 서버 시작 대기 중... ($i/30)"
     sleep 2
 done
 
-echo -e "${RED}❌ PROD 서버 시작 실패. 로그를 확인하세요.${NC}"
+echo -e "${RED}❌ INT 서버 시작 실패. 로그를 확인하세요.${NC}"
 echo -e "${YELLOW}로그 확인 명령어:${NC}"
-echo "ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'tail -100 ~/life-cycle-prod/logs/prod-application.log'"
+echo "ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST 'tail -100 ~/life-cycle-int/logs/int-application.log'"
 echo ""
 echo -e "${YELLOW}디버깅 도움말:${NC}"
 echo "1. 서버 접속: ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST"
@@ -196,4 +196,3 @@ echo "5. 디스크 공간 확인: df -h"
 echo "6. 메모리 확인: free -m"
 
 exit 1
-

@@ -20,7 +20,6 @@ import org.hibernate.annotations.ColumnDefault;
 public class LifecycleContent extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "lifecycle_content_id", nullable = false)
     private UUID id;
 

@@ -19,7 +19,6 @@ import lombok.Setter;
 public class MemberFamily extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_family_id", nullable = false)
     private UUID id;
 

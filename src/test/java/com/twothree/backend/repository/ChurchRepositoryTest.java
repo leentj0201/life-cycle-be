@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +38,7 @@ class ChurchRepositoryTest {
     void setUp() {
         // 활성화된 교회
         activeChurch = new Church();
+        activeChurch.setId(UUID.randomUUID()); // UUID 수동 설정
         activeChurch.setName("활성화된 교회");
         activeChurch.setAddress("서울시 강남구");
         activeChurch.setPhone("02-1234-5678");
@@ -49,6 +51,7 @@ class ChurchRepositoryTest {
         
         // 비활성화된 교회
         inactiveChurch = new Church();
+        inactiveChurch.setId(UUID.randomUUID()); // UUID 수동 설정
         inactiveChurch.setName("비활성화된 교회");
         inactiveChurch.setAddress("서울시 서초구");
         inactiveChurch.setPhone("02-9876-5432");
@@ -98,6 +101,7 @@ class ChurchRepositoryTest {
     void saveChurch() {
         // given
         Church newChurch = new Church();
+        newChurch.setId(UUID.randomUUID()); // UUID 수동 설정
         newChurch.setName("새로운 교회");
         newChurch.setAddress("서울시 송파구");
         newChurch.setPhone("02-1111-2222");

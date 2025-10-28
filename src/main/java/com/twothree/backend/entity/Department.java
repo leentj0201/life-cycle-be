@@ -20,7 +20,6 @@ import org.hibernate.annotations.ColumnDefault;
 public class Department extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "department_id", nullable = false)
     private UUID id;
 

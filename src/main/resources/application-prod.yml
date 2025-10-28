@@ -1,62 +1,89 @@
+# PROD 환경 설정 (미래 운영 환경용)
 spring:
-  application:
-    name: life-cycle-backend
+  profiles:
+    active: prod
   
   datasource:
-    url: jdbc:postgresql://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
+    # PROD-DB 연결 설정 (미래에 별도 운영 DB로 변경 예정)
+    url: jdbc:postgresql://PROD-DB-HOST:5432/life-cycle-prod
+    username: ${PROD_DB_USER:prod_user}
+    password: ${PROD_DB_PASSWORD:prod_password}
     driver-class-name: org.postgresql.Driver
-    username: twothree_user
-    password: twothree_user123!
+    
+    # Connection Pool 설정 (운영 환경용)
     hikari:
-      maximum-pool-size: 10
-      minimum-idle: 5
+      maximum-pool-size: 20        # 운영 환경용 높은 풀 크기
+      minimum-idle: 10
+      idle-timeout: 30000
       connection-timeout: 30000
-      idle-timeout: 600000
       max-lifetime: 1800000
-  
+      leak-detection-threshold: 60000
+
   jpa:
     hibernate:
-      ddl-auto: validate
-    show-sql: false
+      ddl-auto: validate           # 운영에서는 반드시 validate만
     properties:
       hibernate:
-        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    open-in-view: false
+        format_sql: false          # 운영에서는 포맷팅 비활성화
+        show_sql: false            # 운영에서는 SQL 로그 비활성화
+        generate_statistics: false  # 성능 통계 비활성화
+    show-sql: false
+    open-in-view: false           # 성능 최적화
 
+# 서버 설정
 server:
   port: 8080
-  address: 0.0.0.0
-  compression:
-    enabled: true
+  address: 0.0.0.0               # 외부 접속 허용
   error:
-    include-message: always
-    include-stacktrace: never
+    include-stacktrace: never     # 운영에서는 스택트레이스 숨김
+    include-message: on-param     # 에러 메시지 제한적 노출
 
 # API 설정
 api:
-  base-url: http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080
+  base-url: https://api.your-domain.com  # 운영 도메인으로 변경 예정
   version: v1
+  environment: prod
 
-# Swagger 설정 (운영 환경에서도 활성화, 필요시 비활성화 가능)
+# Swagger 설정 (운영 환경에서는 비활성화)
 springdoc:
   api-docs:
-    path: /v3/api-docs
+    enabled: false              # 운영에서는 API 문서 비활성화
   swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
+    enabled: false              # 운영에서는 Swagger UI 비활성화
 
+# 로깅 설정 (운영 환경)
 logging:
   level:
-    root: INFO
+    root: WARN                  # 운영에서는 WARN 레벨 이상만
     com.twothree.backend: INFO
-    org.hibernate.SQL: WARN
-    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.hibernate: WARN
+    org.springframework: WARN
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%logger{36}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%logger{36}] - %msg%n"
   file:
-    name: logs/application.log
-    max-size: 10MB
+    name: logs/prod-application.log
+    max-size: 100MB
+    total-size-cap: 1GB
     max-history: 30
 
+# 관리 엔드포인트 (운영 환경용 - 보안 강화)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health           # 운영에서는 health만 노출
+  endpoint:
+    health:
+      show-details: never       # 운영에서는 헬스 상세 정보 숨김
+  security:
+    enabled: true
+
+# 환경 정보
+info:
+  app:
+    name: Life Cycle Management System
+    version: 1.0.0
+    environment: PROD
+    description: Production Environment

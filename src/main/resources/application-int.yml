@@ -1,0 +1,87 @@
+# INT 환경 설정 (통합 테스트 환경)
+spring:
+  profiles:
+    active: int
+  
+  datasource:
+    # INT-DB 연결 설정 (현재 EC2 PostgreSQL)
+    url: jdbc:postgresql://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:5432/life_cycle
+    username: life_cycle_user
+    password: life_cycle_user123!
+    driver-class-name: org.postgresql.Driver
+    
+    # Connection Pool 설정
+    hikari:
+      maximum-pool-size: 15        # INT 환경용 적절한 풀 크기
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate           # INT 환경에서는 스키마 검증만
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: false            # INT에서는 SQL 로그 비활성화
+    show-sql: false
+    open-in-view: false           # 성능 최적화
+
+# 서버 설정
+server:
+  port: 8080
+  address: 0.0.0.0               # 외부 접속 허용 (EC2 배포용)
+
+# API 설정
+api:
+  base-url: http://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:8080
+  version: v1
+  environment: int
+
+# Swagger 설정 (INT 환경에서는 활성화)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    enabled: true               # INT에서는 Swagger UI 활성화
+  show-actuator: false
+
+# 로깅 설정 (INT 환경)
+logging:
+  level:
+    root: INFO
+    com.twothree.backend: INFO
+    org.hibernate.SQL: WARN      # INT에서는 SQL 로그 레벨 낮춤
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%logger{36}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%logger{36}] - %msg%n"
+  file:
+    name: logs/int-application.log
+
+# 관리 엔드포인트 (INT 환경용)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    env:
+      enabled: true
+
+# 환경 정보
+info:
+  app:
+    name: Life Cycle Management System
+    version: 1.0.0
+    environment: INT
+    description: Integration Testing Environment
