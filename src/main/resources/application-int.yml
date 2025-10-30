@@ -5,7 +5,7 @@ spring:
   
   datasource:
     # INT-DB 연결 설정 (현재 EC2 PostgreSQL)
-    url: jdbc:postgresql://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:5432/life_cycle
+    url: jdbc:postgresql://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:5432/life_cycle
     username: life_cycle_user
     password: life_cycle_user123!
     driver-class-name: org.postgresql.Driver
@@ -36,7 +36,7 @@ server:
 
 # API 설정
 api:
-  base-url: http://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:8080
+  base-url: http://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:8080
   version: v1
   environment: int
 

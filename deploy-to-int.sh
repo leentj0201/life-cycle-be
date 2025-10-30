@@ -11,9 +11,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # 설정
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/life-cycle-int.pem}"
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/life_cycle_int.pem}"
 SERVER_USER="${SERVER_USER:-ubuntu}"
-SERVER_HOST="${SERVER_HOST:-ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com}"
+SERVER_HOST="${SERVER_HOST:-ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com}"
 APP_NAME="life-cycle-0.0.1-SNAPSHOT.jar"
 REMOTE_DIR="~/life-cycle-int"
 PROFILE="int"

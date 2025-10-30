@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-54-180-123-237.ap-northeast-2.compute.amazonaws.com:5432/life_cycle
+    url: jdbc:postgresql://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:5432/life_cycle
     username: life_cycle_user
     password: life_cycle_user123!
     driver-class-name: org.postgresql.Driver
