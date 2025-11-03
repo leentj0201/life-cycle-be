@@ -162,7 +162,7 @@ curl -X POST http://localhost:8080/api/church/get \
 ## 엔드포인트 상수 관리
 
 ### ApiEndpoints.java
-모든 API 엔드포인트는 `com.twothree.backend.constant.ApiEndpoints` 클래스에서 관리됩니다.
+모든 API 엔드포인트는 `com.twothree.lifecycle.constant.ApiEndpoints` 클래스에서 관리됩니다.
 
 ```java
 // Church API
