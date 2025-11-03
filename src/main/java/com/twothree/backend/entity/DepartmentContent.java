@@ -21,8 +21,8 @@ public class DepartmentContent extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @UuidGenerator
-    @Column(name = "department_content_id", nullable = false)
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @Column(name = "department_content_id", updatable = false, nullable = false)
     private UUID id;
 
     @NotNull

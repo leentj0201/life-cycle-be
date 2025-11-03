@@ -20,8 +20,8 @@ public class MemberDepartment extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @UuidGenerator
-    @Column(name = "member_department_id", nullable = false)
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @Column(name = "member_department_id", updatable = false, nullable = false)
     private UUID id;
 
     @NotNull

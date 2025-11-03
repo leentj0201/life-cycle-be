@@ -23,8 +23,8 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @UuidGenerator
-    @Column(name = "member_id", nullable = false)
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @Column(name = "member_id", updatable = false, nullable = false)
     private UUID id;
 
     @NotNull

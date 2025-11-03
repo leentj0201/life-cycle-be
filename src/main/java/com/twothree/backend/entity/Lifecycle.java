@@ -21,8 +21,8 @@ public class Lifecycle extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @UuidGenerator
-    @Column(name = "lifecycle_id", nullable = false)
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @Column(name = "lifecycle_id", updatable = false, nullable = false)
     private UUID id;
 
     @NotNull

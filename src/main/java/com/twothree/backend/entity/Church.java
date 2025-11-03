@@ -21,8 +21,8 @@ public class Church extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @UuidGenerator
-    @Column(name = "church_id", nullable = false)
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @Column(name = "church_id", updatable = false, nullable = false)
     private UUID id;
 
     @Size(max = 100)
