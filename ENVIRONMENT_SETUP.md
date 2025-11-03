@@ -45,7 +45,7 @@
 ### 2. INT 환경 (통합 테스트)
 
 **목적**: 통합 테스트 및 QA 검증  
-**서버**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080`  
+**서버**: `http://3.34.74.224:8080`  
 **데이터베이스**: INT-DB (LOCAL과 동일)  
 **설정 파일**: `application-int.yml`
 
@@ -67,20 +67,20 @@ export SSH_KEY=~/your-key.pem
 ```
 
 #### 접속 정보:
-- **API Base**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api`
-- **Swagger UI**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html`
-- **API Docs**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/v3/api-docs`
+- **API Base**: `http://3.34.74.224:8080/api`
+- **Swagger UI**: `http://3.34.74.224:8080/swagger-ui.html`
+- **API Docs**: `http://3.34.74.224:8080/v3/api-docs`
 
 #### 서버 관리:
 ```bash
 # 로그 확인
-ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com 'tail -f ~/life-cycle-int/logs/int-application.log'
+ssh -i ~/.ssh/your-key.pem ec2-user@3.34.74.224 'tail -f ~/life-cycle-int/logs/int-application.log'
 
 # 프로세스 상태 확인
-ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com 'ps -p $(cat ~/life-cycle-int/int-app.pid)'
+ssh -i ~/.ssh/your-key.pem ec2-user@3.34.74.224 'ps -p $(cat ~/life-cycle-int/int-app.pid)'
 
 # 서버 중지
-ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com 'kill $(cat ~/life-cycle-int/int-app.pid)'
+ssh -i ~/.ssh/your-key.pem ec2-user@3.34.74.224 'kill $(cat ~/life-cycle-int/int-app.pid)'
 ```
 
 ---
@@ -112,7 +112,7 @@ ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.ama
 ## 🌐 데이터베이스 구성
 
 ### INT-DB (현재 사용 중)
-- **호스트**: `ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com`
+- **호스트**: `3.34.74.224`
 - **포트**: `5432`
 - **데이터베이스**: `life-cycle`
 - **사용자**: `twothree_user`
@@ -224,11 +224,11 @@ open http://localhost:8080/swagger-ui.html
 ./deploy-to-int.sh
 
 # API 테스트
-curl -X POST http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api/church/list \
+curl -X POST http://3.34.74.224:8080/api/church/list \
   -H "Content-Type: application/json" -d '{}'
 
 # Swagger UI
-open http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html
+open http://3.34.74.224:8080/swagger-ui.html
 ```
 
 ---
@@ -244,14 +244,14 @@ lsof -i:8080
 tail -f logs/application.log
 
 # 데이터베이스 연결 확인
-psql -h ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com \
+psql -h 3.34.74.224 \
      -U twothree_user -d life-cycle
 ```
 
 ### 2. INT 환경 문제
 ```bash
 # 서버 접속
-ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com
+ssh -i ~/.ssh/your-key.pem ec2-user@3.34.74.224
 
 # 로그 확인
 tail -f ~/life-cycle-int/logs/int-application.log
@@ -266,10 +266,10 @@ sudo lsof -i:8080
 ### 3. 네트워크 문제
 ```bash
 # 서버 응답 확인
-curl -I http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html
+curl -I http://3.34.74.224:8080/swagger-ui.html
 
 # DNS 확인
-nslookup ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com
+nslookup 3.34.74.224
 
 # 보안 그룹 확인 (AWS Console)
 # - 포트 8080 인바운드 규칙 확인
@@ -283,7 +283,7 @@ nslookup ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com
 ### INT 환경 모니터링
 ```bash
 # 시스템 리소스
-ssh -i ~/.ssh/your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com << 'EOF'
+ssh -i ~/.ssh/your-key.pem ec2-user@3.34.74.224 << 'EOF'
 echo "=== CPU 및 메모리 사용량 ==="
 top -bn1 | head -10
 
@@ -302,7 +302,7 @@ EOF
 ```bash
 # 간단한 헬스 체크 스크립트
 #!/bin/bash
-for env in localhost:8080 ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080; do
+for env in localhost:8080 3.34.74.224:8080; do
     echo "=== $env 헬스 체크 ==="
     if curl -s "$env/api/church/list" -H "Content-Type: application/json" -d '{}' > /dev/null; then
         echo "✅ $env: 정상"

@@ -71,7 +71,7 @@ docker rm life-cycle-backend
 
 #### 1. 서버 접속
 ```bash
-ssh -i your-key.pem ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com
+ssh -i your-key.pem ec2-user@3.34.74.224
 ```
 
 #### 2. Java 17 설치 확인
@@ -85,7 +85,7 @@ sudo yum install java-17-amazon-corretto-devel
 ```bash
 # 로컬에서 실행
 scp -i your-key.pem build/libs/life-cycle-0.0.1-SNAPSHOT.jar \
-  ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:~/
+  ec2-user@3.34.74.224:~/
 ```
 
 #### 4. 서버에서 실행
@@ -284,6 +284,6 @@ ps aux | grep java
 - API Docs: http://localhost:8080/v3/api-docs
 
 ### 운영 서버
-- Swagger UI: http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html
-- API Docs: http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/v3/api-docs
+- Swagger UI: http://3.34.74.224:8080/swagger-ui.html
+- API Docs: http://3.34.74.224:8080/v3/api-docs
 

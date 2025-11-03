@@ -10,9 +10,9 @@
 - **API Docs**: `http://localhost:8080/v3/api-docs`
 
 ### 운영 서버
-- **Base URL**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080`
-- **Swagger UI**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html`
-- **API Docs**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/v3/api-docs`
+- **Base URL**: `http://3.34.74.224:8080`
+- **Swagger UI**: `http://3.34.74.224:8080/swagger-ui.html`
+- **API Docs**: `http://3.34.74.224:8080/v3/api-docs`
 
 ---
 
@@ -182,7 +182,7 @@ ApiEndpoints.Church.FULL_DELETE = "/api/church/delete"
 
 // Server URLs
 ApiEndpoints.Server.LOCAL = "http://localhost:8080"
-ApiEndpoints.Server.PRODUCTION = "http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080"
+ApiEndpoints.Server.PRODUCTION = "http://3.34.74.224:8080"
 
 // Swagger
 ApiEndpoints.Swagger.UI = "/swagger-ui.html"

@@ -3,7 +3,7 @@ spring:
     name: life-cycle-backend
   
   datasource:
-    url: jdbc:postgresql://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:5432/life-cycle
+    url: jdbc:postgresql://3.34.74.224:5432/life_cycle
     driver-class-name: org.postgresql.Driver
     username: life_cycle_user
     password: life_cycle_user123!

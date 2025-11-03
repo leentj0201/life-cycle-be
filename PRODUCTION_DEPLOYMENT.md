@@ -3,7 +3,7 @@
 ## 📋 사전 준비사항
 
 ### 1. 필요한 정보
-- **AWS EC2 서버**: `ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com`
+- **AWS EC2 서버**: `3.34.74.224`
 - **SSH 키 파일**: `.pem` 또는 `.key` 파일
 - **서버 사용자**: `ec2-user` (Amazon Linux) 또는 `ubuntu` (Ubuntu)
 - **데이터베이스**: 이미 설정되어 있음
@@ -65,18 +65,18 @@ ls -lh build/libs/life-cycle-0.0.1-SNAPSHOT.jar
 # JAR 파일 업로드
 scp -i ~/.ssh/your-key.pem \
     build/libs/life-cycle-0.0.1-SNAPSHOT.jar \
-    ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:~/
+    ec2-user@3.34.74.224:~/
 
 # 운영 환경 설정 파일 업로드
 scp -i ~/.ssh/your-key.pem \
     src/main/resources/application-prod.yml \
-    ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:~/
+    ec2-user@3.34.74.224:~/
 ```
 
 #### Step 3: EC2 서버 접속
 ```bash
 ssh -i ~/.ssh/your-key.pem \
-    ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com
+    ec2-user@3.34.74.224
 ```
 
 #### Step 4: 서버 환경 설정 (최초 1회)
@@ -248,7 +248,7 @@ sudo vi /etc/nginx/conf.d/life-cycle.conf
 ```nginx
 server {
     listen 80;
-    server_name ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com;
+    server_name 3.34.74.224;
 
     # 클라이언트 요청 크기 제한
     client_max_body_size 10M;
@@ -367,7 +367,7 @@ df -h
 ./gradlew clean build
 scp -i ~/.ssh/your-key.pem \
     build/libs/life-cycle-0.0.1-SNAPSHOT.jar \
-    ec2-user@ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:~/life-cycle-new.jar
+    ec2-user@3.34.74.224:~/life-cycle-new.jar
 ```
 
 #### 2. 서버에서 교체
@@ -407,12 +407,12 @@ sudo lsof -i:8080
 ### 문제 2: 데이터베이스 연결 실패
 ```bash
 # DB 연결 테스트
-psql -h ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com \
+psql -h 3.34.74.224 \
      -U twothree_user \
      -d life-cycle
 
 # 방화벽 확인
-telnet ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com 5432
+telnet 3.34.74.224 5432
 ```
 
 ### 문제 3: 메모리 부족
@@ -534,14 +534,14 @@ docker logs -f life-cycle-backend
 ## 🌐 접속 URL
 
 ### 운영 서버 배포 후:
-- **Swagger UI**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html`
-- **API Docs**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/v3/api-docs`
-- **Church API**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api/church/list`
+- **Swagger UI**: `http://3.34.74.224:8080/swagger-ui.html`
+- **API Docs**: `http://3.34.74.224:8080/v3/api-docs`
+- **Church API**: `http://3.34.74.224:8080/api/church/list`
 
 ### 헬스 체크
 ```bash
 curl -X POST \
-  http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api/church/list \
+  http://3.34.74.224:8080/api/church/list \
   -H "Content-Type: application/json"
 ```
 

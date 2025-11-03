@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 # 설정
 SSH_KEY="${SSH_KEY:-$HOME/.ssh/life-cycle-prod.pem}"
 SERVER_USER="${SERVER_USER:-ubuntu}"
-SERVER_HOST="${SERVER_HOST:-ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com}"
+SERVER_HOST="${SERVER_HOST:-3.34.74.224}"
 APP_NAME="life-cycle-0.0.1-SNAPSHOT.jar"
 REMOTE_DIR="~/life-cycle-prod"
 PROFILE="prod"

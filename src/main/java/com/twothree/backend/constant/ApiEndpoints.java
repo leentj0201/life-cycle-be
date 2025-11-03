@@ -263,7 +263,7 @@ public final class ApiEndpoints {
         private Server() {}
         
         public static final String LOCAL = "http://localhost:8080";
-        public static final String INT = "http://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:8080";
+        public static final String INT = "http://3.34.74.224:8080";
         public static final String PRODUCTION = "https://api.your-domain.com";  // 미래 운영 도메인
         
         // Full URLs

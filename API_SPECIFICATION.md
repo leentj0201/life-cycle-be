@@ -4,7 +4,7 @@
 
 **시스템명**: 생애주기 관리 시스템 (Life Cycle Management System)  
 **버전**: v1.0  
-**Base URL**: `http://localhost:8080` (개발) / `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080` (운영)  
+**Base URL**: `http://localhost:8080` (개발) / `http://3.34.74.224:8080` (운영)  
 **API 문서**: `/swagger-ui.html`  
 **OpenAPI 스펙**: `/v3/api-docs`  
 

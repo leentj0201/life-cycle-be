@@ -6,7 +6,7 @@
       <synchronize>true</synchronize>
       <remarks>생애주기 int db</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://ec2-43-200-180-98.ap-northeast-2.compute.amazonaws.com:5432/life_cycle</jdbc-url>
+      <jdbc-url>jdbc:postgresql://3.34.74.224:5432/life_cycle</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />

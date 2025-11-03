@@ -16,7 +16,7 @@
     },
     {
       "key": "productionUrl",
-      "value": "http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080",
+      "value": "http://3.34.74.224:8080",
       "type": "string"
     }
   ],

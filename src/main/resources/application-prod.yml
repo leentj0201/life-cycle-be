@@ -5,7 +5,7 @@ spring:
   
   datasource:
     # PROD-DB 연결 설정 (미래에 별도 운영 DB로 변경 예정)
-    url: jdbc:postgresql://PROD-DB-HOST:5432/life-cycle-prod
+    url: jdbc:postgresql://PROD-DB-HOST:5432/life_cycle
     username: ${PROD_DB_USER:prod_user}
     password: ${PROD_DB_PASSWORD:prod_password}
     driver-class-name: org.postgresql.Driver

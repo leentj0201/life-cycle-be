@@ -31,7 +31,7 @@ open http://localhost:8080/swagger-ui.html
 ./deploy-to-int.sh
 
 # INT 서버 테스트
-curl -X POST http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api/church/list -H "Content-Type: application/json" -d '{}'
+curl -X POST http://3.34.74.224:8080/api/church/list -H "Content-Type: application/json" -d '{}'
 ```
 
 ## 🌐 접속 URL
@@ -42,9 +42,9 @@ curl -X POST http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/
 - **API Docs**: `http://localhost:8080/v3/api-docs`
 
 ### INT 환경  
-- **API Base**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/api`
-- **Swagger UI**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.html`
-- **API Docs**: `http://ec2-54-180-152-24.ap-northeast-2.compute.amazonaws.com:8080/v3/api-docs`
+- **API Base**: `http://3.34.74.224:8080/api`
+- **Swagger UI**: `http://3.34.74.224:8080/swagger-ui.html`
+- **API Docs**: `http://3.34.74.224:8080/v3/api-docs`
 
 ## 📋 주요 기능
 
